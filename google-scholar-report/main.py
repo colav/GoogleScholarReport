@@ -245,7 +245,6 @@ def main(url, email = '', password = '',admin = ''):
 
         print('gsr.shape',gsr.shape)
 
-        
         if admin != '':
             
             # store df admin
