@@ -7,6 +7,7 @@ import argparse
 
 import lxml
 import helium
+from pandas.core.indexes.base import Index
 
 import unidecode
 import bibtexparser
@@ -16,7 +17,7 @@ from bibtexparser.customization import convert_to_unicode
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-import GoogleScholarProfile as gsp
+import scrapergsp as scraper
 
 import pandas as pd
 
@@ -66,7 +67,7 @@ def scraping_gs(url):
  # Scraping Google Scholar
     #url='https://scholar.google.com/citations?hl=en&user=5Fh1OLwAAAAJ'
 
-    url=re.sub(r'hl=[a-zA-Z][a-zA-Z]','hl=en', url)
+    url=str(re.sub(r'hl=[a-zA-Z][a-zA-Z]','hl=en', url))
 
     #    '''
     #    Go to google scholar profile and make scroll to end and catch two html tables: scientific production and index citations. 
@@ -87,10 +88,10 @@ def scraping_gs(url):
     
 
     # get scraping data and metadata
-    rec=gsp.GoogleScholarProfile(browser.page_source)
+    rec=scraper.scrapergsp(browser.page_source)
 
     # handle scraping data -> not login 
-    dfs=pd.DataFrame(data=rec)
+    dfs = pd.DataFrame(data=rec)
 
     browser.close()
     
@@ -185,35 +186,37 @@ def merge(dfs,dfe):
     # preparing dataframe exported gs
     dfe['TitleU'] = dfe['title'].apply(lambda s: unidecode.unidecode(s)
                                ).apply(lambda s: s.replace('$','')
-                               ).apply(lambda s: s.replace('--',''))
+                               ).apply(lambda s: s.replace('--','')
+                               ).apply(lambda s: re.sub(r'backslash\w+([\s\)])',r'\1',s.replace('\\',''))
+                               ).apply(lambda s: s.replace('^','')
+                               ).apply(lambda s: s.replace('_','')
+                               ).apply(lambda s: s.replace('  ',' '))  # siempre al final
 
     dfe = dfe.drop_duplicates(subset=['TitleU']).reset_index(drop=True)
 
     dfe=dfe.reset_index(drop=True)
 
-    # Merge 
+    # Merge dfs and dfe
     gs=dfs.merge(dfe,on='TitleU',how='left')
-        # gs=gs.drop_duplicates('TitleU').reset_index(drop=True)
+    # Result Merge
     gs=gs.reset_index(drop=True)
     
-    GS = gs
-    
-    # fixed bad results in title column
+    # fix empty results right side
     gsn = gs[~gs['title'].isna()].reset_index(drop=True) # not empty
 
-    gsy = gs[gs['title'].isna()].reset_index(drop=True) # yes, empty
+    gsy = gs[gs['title'].isna()].reset_index(drop=True) # yes, empty right side
 
     gsy = gsy.dropna(axis=1)
-    
+
     if gsy.shape[0] > 0:
-    
+
         g=pd.DataFrame()
 
         for i in gsy.index:
 
             d = gsy.loc[[i]].to_dict(orient='records')[0]
 
-            rs = process.extractOne(d['TitleU'],dfe['TitleU'],scorer=fuzz.partial_ratio)
+            rs = process.extractOne(d['TitleU'],dfe['TitleU'],scorer=fuzz.ratio)
 
             if rs[1] > 90:
 
@@ -222,14 +225,48 @@ def merge(dfs,dfe):
                 d.update(dfe.loc[[idx]].to_dict(orient='records')[0])
 
                 g = g.append(d,ignore_index=True)
-                
-        GS =pd.concat([gsn,g])
-        
-    return GS
+
+            elif (rs[1] > 70) :
+
+                rsp = process.extractOne(d['TitleU'],dfe['TitleU'],scorer=fuzz.partial_ratio)
+
+                if rsp[1] > 90:
+
+                    idx = rsp[2]
+
+                    d.update(dfe.loc[[idx]].to_dict(orient='records')[0])
+
+                    g = g.append(d,ignore_index=True)
+
+                elif rsp[1] > 50:
+
+                    rspp = process.extractOne(d['TitleU'],dfe['TitleU'],scorer=fuzz.token_sort_ratio)
+
+                    if rspp[1] > 70:
+
+                        idx = rspp[2]
+
+                        d.update(dfe.loc[[idx]].to_dict(orient='records')[0])
+
+                        g = g.append(d,ignore_index=True)
+                    else:
+
+                        print(gsy.loc[i])
+
+                else:
+
+                    print(gsy.loc[i])
+
+            else:
+
+                print(gsy.loc[i])
+
+
+        gsr =pd.concat([gsn,g])
+
+    return gsr
 
 def main(url, email = '', password = '',admin = ''):
-    
-    url = sys.argv[1]
     
     if email != '' and password !='':
         
@@ -245,11 +282,12 @@ def main(url, email = '', password = '',admin = ''):
 
         print('gsr.shape',gsr.shape)
 
+        
         if admin != '':
             
             # store df admin
 
-            gsr.to_excel('google_scholar_report_admin.xlsx')
+            gsr.to_excel('google_scholar_report_admin.xlsx',index=False)
 
             return 'google_scholar_report_admin.xlsx stored!'
         
@@ -258,7 +296,7 @@ def main(url, email = '', password = '',admin = ''):
 
             gsr=gsr.loc[:, gsr.columns != 'bibtex']
 
-            gsr.to_excel('google_scholar_report_user.xlsx')
+            gsr.to_excel('google_scholar_report_user.xlsx',index=False)
 
             return 'store df user authenticate'
     
@@ -277,7 +315,7 @@ def main(url, email = '', password = '',admin = ''):
                    inplace=True)
 
         # store df generic
-        dfs.to_excel('google_scholar_report_generic.xlsx')
+        dfs.to_excel('google_scholar_report_generic.xlsx',index=False)
         
         return 'generic report stored' 
 
@@ -285,7 +323,7 @@ if __name__ == "__main__":
 
     args = command_line_parser()
 
-    url = args.url
+    url = str(args.url)
 
     if args.email and args.password:
 
@@ -297,7 +335,7 @@ if __name__ == "__main__":
 
             admin = args.admin
 
-            main(url, mail, password, admin)
+            main(url, email, password, admin)
         else:
 
             main(url, email, password)
