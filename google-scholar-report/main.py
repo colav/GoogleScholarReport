@@ -80,7 +80,7 @@ def scraping_gs(url):
     while helium.Button.is_enabled(helium.Button('SHOW MORE')):
 
         helium.scroll_down(200000)
-        print('click',':',clicks)
+        print('reading page:',clicks, 'of Gs profile')
         helium.click(helium.Button('SHOW MORE'))
         helium.scroll_down(100000)
         time.sleep(1.5)
@@ -105,6 +105,8 @@ def export_gs(email,password):
     url_to_gs='https://scholar.google.com/citations?hl=es&login' 
 
     browser=helium.start_firefox(url_to_gs,headless=True)
+    print('Authenticating in google scholar profile...')
+    print('\n')
 
     # Login
     helium.write(email,into='Correo electrónico o teléfono')
@@ -118,10 +120,16 @@ def export_gs(email,password):
     time.sleep(sleep)
     helium.click(helium.Button('Siguiente'))
 
-    #wait until load page
+    print('Auth google scholar ok')
+    print('\n')
+
+    # Wait until load page
     helium.wait_until(helium.Text('TÍTULO').exists)
 
     # Select articles
+    print('collecting google scholar records...')
+    print('\n')
+    
     time.sleep(3)
     browser.find_element_by_id('gsc_x_all').click()
 
@@ -198,8 +206,12 @@ def merge(dfs,dfe):
 
     # Merge dfs and dfe
     gs=dfs.merge(dfe,on='TitleU',how='left')
+
     # Result Merge
     gs=gs.reset_index(drop=True)
+
+    print('Exporting google scholar records with all metadata...')
+    print('\n')
     
     # fix empty results right side
     gsn = gs[~gs['title'].isna()].reset_index(drop=True) # not empty
@@ -249,48 +261,49 @@ def merge(dfs,dfe):
                         d.update(dfe.loc[[idx]].to_dict(orient='records')[0])
 
                         g = g.append(d,ignore_index=True)
-                    else:
 
+                    else:
+                        print('problem with thre record:')
                         print(gsy.loc[i])
 
                 else:
-
+                    print('problem with the record:')
                     print(gsy.loc[i])
+                    print('\n')
 
             else:
-
+                print('problem with thre record:')
                 print(gsy.loc[i])
-
+                print('\n')
 
         gsr =pd.concat([gsn,g])
 
     return gsr
 
-def main(url, email = '', password = '',admin = ''):
+def gsr(url, email = '', password = '',admin = ''):
     
     if email != '' and password !='':
         
         dfs = scraping_gs(url)
 
-        print('dfs.shape:',dfs.shape)
+        #print('dfs.shape:',dfs.shape)
         
         dfe = export_gs(email, password)
 
-        print('dfe.shape:', dfe.shape)
+        #print('dfe.shape:', dfe.shape)
         
         gsr = merge(dfs,dfe)
 
         print('gsr.shape',gsr.shape)
 
-        
         if admin != '':
             
             # store df admin
 
             gsr.to_excel('google_scholar_report_admin.xlsx',index=False)
 
-            return 'google_scholar_report_admin.xlsx stored!'
-        
+            return 'Admin report stored with %s records' % gsr.shape[0]
+
         else:
             # store df user authenticate
 
@@ -298,7 +311,7 @@ def main(url, email = '', password = '',admin = ''):
 
             gsr.to_excel('google_scholar_report_user.xlsx',index=False)
 
-            return 'store df user authenticate'
+            return 'User authenticated report stored with %s records' % gsr.shape[0]
     
     else:
         
@@ -317,7 +330,7 @@ def main(url, email = '', password = '',admin = ''):
         # store df generic
         dfs.to_excel('google_scholar_report_generic.xlsx',index=False)
         
-        return 'generic report stored' 
+        return 'generic report stored with %s records' % dfs.shape[0] 
 
 if __name__ == "__main__":
 
@@ -335,11 +348,11 @@ if __name__ == "__main__":
 
             admin = args.admin
 
-            main(url, email, password, admin)
+            gsr(url, email, password, admin)
         else:
 
-            main(url, email, password)
+            gsr(url, email, password)
     
     else:
 
-        main(url)
+        gsr(url)
