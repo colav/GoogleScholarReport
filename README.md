@@ -37,7 +37,7 @@ This return one xlsx file report in the current working directory with the follo
  Finally, for admin mode, issue: 
  
  ```bash
-python3 main.py "url_for_the_google_scholar_profile" --email <email> --password <password> --admin True
+python3 main.py "url_for_the_google_scholar_profile" --email <email> --password <password> --admin
 ```
 
 This return xlsx file whit the same metadata that option two plus one fiedl 'bibtex'.
