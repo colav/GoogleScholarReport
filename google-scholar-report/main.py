@@ -33,7 +33,7 @@ def command_line_parser():
 
     parser.add_argument("-admin","--admin", default=True, action='store_true', help="adming mode True")
     
-    parser.add_argument("-no_admin","--no_admin",dest="--admin", action='store_false', help="adming mode True")
+    parser.add_argument("-no_admin","--no_admin",dest="admin", action='store_false', help="adming mode True")
 
     args = parser.parse_args()
 
