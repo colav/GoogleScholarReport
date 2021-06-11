@@ -31,9 +31,9 @@ def command_line_parser():
 
     parser.add_argument("--password", help="password for google scholar account",type=str)
 
-    parser.add_argument("--admin", default=True, action='store_true', help="adming mode True")
+    parser.add_argument("-admin","--admin", default=True, action='store_true', help="adming mode True")
     
-    parser.add_argument("--no_admin",dest="--admin", action='store_false', help="adming mode True")
+    parser.add_argument("-no_admin","--no_admin",dest="--admin", action='store_false', help="adming mode True")
 
     args = parser.parse_args()
 
@@ -284,7 +284,7 @@ def merge(dfs,dfe):
 
     return gsr
 
-def gsr(url, email = '', password = '',admin = ''):
+def gsr(url, email = '', password = '',admin = False):
     
     if email != '' and password !='':
         
@@ -300,7 +300,7 @@ def gsr(url, email = '', password = '',admin = ''):
 
         print('gsr.shape',gsr.shape)
 
-        if admin != '':
+        if admin:
             
             # store df admin
 
