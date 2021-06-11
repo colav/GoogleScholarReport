@@ -31,9 +31,9 @@ def command_line_parser():
 
     parser.add_argument("--password", help="password for google scholar account",type=str)
 
-    parser.add_argument("-no_admin","--no_admin", default=False, action='store_false', help="adming mode True")
+    parser.add_argument("-user","--user", default=True, action='store_true', help="adming mode True")
     
-    parser.add_argument("-admin","--admin",dest="no_admin", action='store_true', help="adming mode True")
+    parser.add_argument("-no_user","--no_user",dest="user", action='store_false', help="adming mode True")
 
     args = parser.parse_args()
 
@@ -340,7 +340,7 @@ if __name__ == "__main__":
 
     args = command_line_parser()
     
-    print(args.admin)
+    print(args.user)
     
     sys.exit('check')
 
