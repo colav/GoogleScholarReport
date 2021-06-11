@@ -339,6 +339,10 @@ def gsr(url, email = '', password = '',admin = ''):
 if __name__ == "__main__":
 
     args = command_line_parser()
+    
+    print(args.admin)
+    
+    sys.exit('check')
 
     url = str(args.url)
 
