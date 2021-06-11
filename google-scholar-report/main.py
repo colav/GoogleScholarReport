@@ -265,16 +265,16 @@ def merge(dfs,dfe):
                         g = g.append(d,ignore_index=True)
 
                     else:
-                        print('problem with thre record:')
+                        print('problem with record:')
                         print(gsy.loc[i])
 
                 else:
-                    print('problem with the record:')
+                    print('problem with record:')
                     print(gsy.loc[i])
                     print('\n')
 
             else:
-                print('problem with thre record:')
+                print('problem with record:')
                 print(gsy.loc[i])
                 print('\n')
 
