@@ -31,7 +31,7 @@ def command_line_parser():
 
     parser.add_argument("--password", help="password for google scholar account",type=str)
 
-    parser.add_argument("--admin", help="adming mode True or False",type=bool)
+    parser.add_argument("--admin", default=True, action='store_true', help="adming mode True",type=bool)
 
     args = parser.parse_args()
 
