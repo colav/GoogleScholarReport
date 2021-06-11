@@ -92,6 +92,8 @@ def scraping_gs(url):
 
     # handle scraping data -> not login 
     dfs = pd.DataFrame(data=rec)
+    
+    dfs = dfs.drop_duplicates(subset=['src_title']).reset_index(drop=True)
 
     browser.close()
     
