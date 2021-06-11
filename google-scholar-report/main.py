@@ -302,7 +302,7 @@ def gsr(url, email = '', password = '',admin = ''):
 
             gsr.to_excel('google_scholar_report_admin.xlsx',index=False)
 
-            return 'Admin report stored with %s records' % gsr.shape[0]
+            print('Admin report stored with %s records' % gsr.shape[0])
 
         else:
             # store df user authenticate
@@ -311,7 +311,7 @@ def gsr(url, email = '', password = '',admin = ''):
 
             gsr.to_excel('google_scholar_report_user.xlsx',index=False)
 
-            return 'User authenticated report stored with %s records' % gsr.shape[0]
+            print('User authenticated report stored with %s records' % gsr.shape[0])
     
     else:
         
@@ -330,7 +330,7 @@ def gsr(url, email = '', password = '',admin = ''):
         # store df generic
         dfs.to_excel('google_scholar_report_generic.xlsx',index=False)
         
-        return 'generic report stored with %s records' % dfs.shape[0] 
+        print('generic report stored with %s records' % dfs.shape[0]) 
 
 if __name__ == "__main__":
 
