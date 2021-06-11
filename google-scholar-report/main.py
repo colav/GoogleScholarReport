@@ -31,10 +31,9 @@ def command_line_parser():
 
     parser.add_argument("--password", help="password for google scholar account",type=str)
 
-    parser.add_argument("-user","--user", default=True, action='store_true', help="
-                        g mode True")
+    parser.add_argument("-user","--user", default=True, action='store_true', help="admin mode True")
     
-    parser.add_argument("-no_user","--no_user",dest="user", action='store_false', help="adming mode True")
+    parser.add_argument("-no_user","--no_user",dest="user", action='store_false', help="admin mode True")
 
     args = parser.parse_args()
 
