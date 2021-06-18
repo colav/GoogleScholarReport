@@ -14,9 +14,13 @@ Package allows to download data from google scholar profiles
 
 # Usage
 ## commanline 
-From comman line, this tool have three main forms of use: generic, authenticated and admin. 
+From comman line, this tool have three main forms of use: generic, authenticated and admin; which difer in amount and cuality of metadata results.
 
-For the firts option of use, issue: 
+```bash
+python3 main.py "url_for_the_google_scholar_profile" --email <user_email> --password <password> --output <format> --admin
+```
+
+For the firts option of use (generic), issue: 
 
 ```bash
 python3 main.py "url_for_the_google_scholar_profile"
@@ -31,7 +35,7 @@ If you want the output in csv or json format agregate the bellow flag and the de
 python3 main.py "url_for_the_google_scholar_profile" --output csv
 ```
 
-For the second option of use:
+For the second option of use (user authenticate):
 
 ```bash
 python3 main.py "url_for_the_google_scholar_profile" --email <email> --password <password>
