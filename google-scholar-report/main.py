@@ -31,13 +31,25 @@ def command_line_parser():
 
     parser.add_argument("--password", help="password for google scholar account",type=str)
 
-    parser.add_argument("-user","--user", default=True, action='store_true', help="admin mode True")
+    parser.add_argument("-output","--output", help="format of output file csv or json; default is xlsx",type=str)
+
+    parser.add_argument("-admin","--admin", default=False, action='store_true', help="admin mode True")
     
-    parser.add_argument("-no_user","--no_user",dest="user", action='store_false', help="admin mode True")
+    #parser.add_argument("-no_admin","--no_admin",dest="admin", action='store_false', help="admin mode True")
 
     args = parser.parse_args()
 
     return args
+
+def store_data(df,name, output):
+    
+    # csv
+    if output == 'csv':
+        df.to_csv(name+'csv',index=False)
+    # json
+    elif output == 'json':
+        df.to_json(name + 'json',orient='records')
+
 
 def read_bibtex(str_bib_tex):
     '''
@@ -212,7 +224,7 @@ def merge(dfs,dfe):
     gs=dfs.merge(dfe,on='TitleU',how='left')
 
     # Result Merge
-    gs=gs.reset_index(drop=True)
+    gs=gs.reset_index(drop=True) # ouput if all its good
 
     print('Exporting google scholar records with all metadata...')
     print('\n')
@@ -280,11 +292,14 @@ def merge(dfs,dfe):
                 print(gsy.loc[i])
                 print('\n')
 
-        gsr =pd.concat([gsn,g])
+        gs =pd.concat([gsn,g]) # output if all isn't good
+    
+    # cleaning columns
+    c = [c for c in gs.columns if 'src' not in c and 'TitleU' not in c]
 
-    return gsr
+    return gs[c]
 
-def gsr(url, email = '', password = '',user = False):
+def gsr(url, email = '', password = '',output='', admin = False):
     
     if email != '' and password !='':
         
@@ -300,22 +315,39 @@ def gsr(url, email = '', password = '',user = False):
 
         print('gsr.shape',gsr.shape)
 
-        if user:
+        if admin:
             
             # store df admin
 
-            gsr.to_excel('google_scholar_report_admin.xlsx',index=False)
+            if output == 'csv' or output == 'json':
 
-            print('Admin report stored with %s records' % gsr.shape[0])
+                store_data(gsr,'google_scholar_report_admin',output)
+
+                print('Admin  report stored with %s records in format %s' % (gsr.shape[0],output))
+            
+            else:
+
+                gsr.to_excel('google_scholar_report_admin.xlsx',index=False)
+
+                print('Admin report stored with %s records in format xlsx' % gsr.shape[0])
 
         else:
+
             # store df user authenticate
 
-            gsr=gsr.loc[:, gsr.columns != 'bibtex']
+            #gsr=gsr.loc[:, gsr.columns != 'bibtex']
 
-            gsr.to_excel('google_scholar_report_user.xlsx',index=False)
+            if output == 'csv' or output == 'json':
 
-            print('User authenticated report stored with %s records' % gsr.shape[0])
+                store_data(gsr,'google_scholar_report_user',output)
+
+                print('User authenticated report stored with %s records in format %s' % (gsr.shape[0],output))
+            
+            else:
+
+                gsr.to_excel('google_scholar_report_user.xlsx',index=False)
+
+                print('User authenticated report stored with %s records in format xlsx' % gsr.shape[0])
     
     else:
         
@@ -332,15 +364,27 @@ def gsr(url, email = '', password = '',user = False):
                    inplace=True)
 
         # store df generic
-        dfs.to_excel('google_scholar_report_generic.xlsx',index=False)
+
+        if output == 'csv' or output == 'json':
+
+            store_data(dfs,'google_scholar_report_user',output)
+
+            print('generic report stored with %s records in format %s' % (dfs.shape[0],output))
+            
+        else:
+
+            dfs.to_excel('google_scholar_report_user.xlsx',index=False)
+
+            print('generic report stored with %s records in format xlsx' % gsr.shape[0])
         
-        print('generic report stored with %s records' % dfs.shape[0]) 
 
 if __name__ == "__main__":
 
     args = command_line_parser()
     
-    print(args.user)
+    print(args.admin)
+
+    print(args.output)
     
     # sys.exit('check')
 
@@ -352,15 +396,42 @@ if __name__ == "__main__":
 
         password = args.password
 
-        if args.user:
+        if args.admin:
 
-            user = args.user
+            admin = args.admin
 
-            gsr(url, email, password, user)
+            print(admin)
+
+            if args.output:
+
+                output = args.output
+
+                gsr(url, email, password, output, admin)
+
+            else:
+
+                gsr(url, email, password, admin=admin)
+
         else:
 
-            gsr(url, email, password)
+            if args.output:
+
+                output = args.output
+
+                gsr(url, email, password,output=output)
+
+            else:
+
+                gsr(url, email, password)
     
     else:
 
-        gsr(url)
+        if args.output:
+
+            output = args.output
+
+            gsr(url,output=output)
+
+        else:
+
+            gsr(url)
