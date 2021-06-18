@@ -23,8 +23,12 @@ python3 main.py "url_for_the_google_scholar_profile"
 ```
 The above option return one xlsx file report in the current working directory with the following metadata:
 
-'title', 'author', 'journal', 'volume', 'number','pages', 'year', 'cite_id', 'cites', 'TitleU',
+'title', 'author', 'journal', 'volume', 'number','pages', 'year', 'cite_id', 'cites', 'TitleU'.
 
+If you want output in csv or json format agregate the bellow flag and desire ouput, for instance:
+```bash
+python3 main.py "url_for_the_google_scholar_profile" --output csv
+```
 For the second option of use:
 ```bash
 python3 main.py "url_for_the_google_scholar_profile" --email <email> --password <password>
