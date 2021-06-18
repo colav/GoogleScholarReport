@@ -49,7 +49,7 @@ python3 main.py "url_for_the_google_scholar_profile" --email <email> --password 
 
 This return by default an xlsx file with the same metadata that option two plus one fiedl 'bibtex'.
 
-in general this commanline tool have the following form:
+In general this commanline tool have the following form:
 
 ```bash
 python3 main.py "url_for_the_google_scholar_profile" --email <user_email> --password <password> --output <format> --admin
