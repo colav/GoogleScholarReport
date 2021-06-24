@@ -38,13 +38,13 @@ class GsFacProfileTestCase(unittest.TestCase):
         self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[2] ==
                             'Revista Actualidades Biologicas: 100 editions of scientific communication')
 
-        self.assertEqual(dft['titleU'].apply(main.extract_title).loc[0]==
+        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[0]==
                             'Riqueza, endemismo y conservacion de los mamiferos de Colombia')
 
-        self.assertEqual(dft['titleU']. apply(main.extract_title).loc[3]==
+        self.assertEqual(self.dft['titleU']. apply(main.extract_title).loc[3]==
                             'BEHAVIOUR OF HIGH TEMPERATURA PHASES OF THE POLYMERIC SYSTEM PVOH+ NAH 2 PO 4+ H 2')
 
-        self.assertEqual(dft['titleU'].apply(main.extract_title).loc[1]==
+        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[1]==
                             'Brans-Dicke Theory with : Black Holes and Large Scale Structures')
                                                
     def test_read_bibtex(self):
