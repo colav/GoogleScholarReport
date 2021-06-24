@@ -15,7 +15,8 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 
 import unittest
-from GsFacProfile import main
+import GoogleScholarReport
+from GoogleScholarReport import main
 
 class GsFacProfileTestCase(unittest.TestCase):
     def setUp(self):
