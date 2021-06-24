@@ -17,7 +17,7 @@ from bibtexparser.customization import convert_to_unicode
 import unittest
 
 import GoogleScholarReport
-from GoogleScholarReport import main
+from GoogleScholarReport import collector
 
 here = os.path.abspath(os.path.dirname('__file__'))
 
@@ -39,16 +39,16 @@ class GsFacProfileTestCase(unittest.TestCase):
 
         self.dft['titleU']=self.dft['title'].apply(lambda s: unidecode.unidecode(s))
 
-        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[2] ==
+        self.assertEqual(self.dft['titleU'].apply(collector.extract_title).loc[2] ==
                             'Revista Actualidades Biologicas: 100 editions of scientific communication')
 
-        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[0]==
+        self.assertEqual(self.dft['titleU'].apply(collector.extract_title).loc[0]==
                             'Riqueza, endemismo y conservacion de los mamiferos de Colombia')
 
-        self.assertEqual(self.dft['titleU']. apply(main.extract_title).loc[3]==
+        self.assertEqual(self.dft['titleU']. apply(collector.extract_title).loc[3]==
                             'BEHAVIOUR OF HIGH TEMPERATURA PHASES OF THE POLYMERIC SYSTEM PVOH+ NAH 2 PO 4+ H 2')
 
-        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[1]==
+        self.assertEqual(self.dft['titleU'].apply(collector.extract_title).loc[1]==
                             'Brans-Dicke Theory with : Black Holes and Large Scale Structures')
                                                
     def test_read_bibtex(self):
@@ -57,7 +57,7 @@ class GsFacProfileTestCase(unittest.TestCase):
             
             bib_str=bibfile.read()
                 
-            bibreaded=main.read_bibtex(bib_str)
+            bibreaded=collector.read_bibtex(bib_str)
 
             print(bibreaded.entries)
 
