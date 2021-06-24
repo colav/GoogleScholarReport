@@ -2,16 +2,31 @@
 <center><img src="https://raw.githubusercontent.com/colav/colav.github.io/master/img/Logo.png"/></center>
 
 # Description
-Google scholar report is a tool for collect data from google scholar profiles and store it with metadata for each scientific paper.
+Google scholar report is a tool for collect data from google scholar profiles and store it with metadata for each scientific paper. This tool have three main forms of use: generic, authenticated and admin; which difer in amount and cuality of metadata results. Default output is xlsx.
 
 ## Usage from python-cli
 
 ## Installation Package
 `$pip install GoogleScholarReport`
 
+For the firts option of use (generic), issue: 
+
 ```python
 >>> from GoogleScholarReport import collector
->>> collector.gsr('url_to_google_scholar_profile' ouput='json')
+>>> collector.gsr('url_to_google_scholar_profile', ouput='json')
+
+```
+For the second option of use (user authenticate):
+```python
+>>> from GoogleScholarReport import collector
+>>> collector.gsr('url_to_google_scholar_profile',email='user_email_google_scholar',password='pass_user_gs',' ouput='json')
+
+```
+
+Finally, for admin mode, issue: 
+```python
+>>> from GoogleScholarReport import collector
+>>> collector.gsr('url_to_google_scholar_profile',email='user_email_google_scholar',password='pass_user_gs', ouput='some_ouput(csv,json)',admin=True)
 
 ```
 
