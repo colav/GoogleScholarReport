@@ -24,7 +24,23 @@ import sys
 
 v = sys.version_info
 
+def read(rel_path):
+    here = os.path.abspath(os.path.dirname(__file__))
+    with codecs.open(os.path.join(here, rel_path), 'r') as fp:
+        return fp.read()
+
+
+def get_version(rel_path):
+    for line in read(rel_path).splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
+
 shell = False
+
+
 if os.name in ('nt', 'dos'):
     shell = True
     warning = "WARNING: Windows is not officially supported"
@@ -34,7 +50,7 @@ if os.name in ('nt', 'dos'):
 def main():
     setup(
         # Application name:
-        name="GsFacProfile",
+        name="google-scholar-report",
 
         # Version number (initial):
         version="0.1.0",
@@ -50,7 +66,7 @@ def main():
         include_package_data=True,
 
         # Details
-        url="https://github.com/grupocolav/mypkg",
+        url="https://github.com/readingwritingcode/google-scholar-report",
 
         #
         license="BSD",
@@ -61,20 +77,28 @@ def main():
         long_description_content_type="text/markdown",
 
         # Dependent packages (distributions)
-        install_requires=['bibtexparser==1.2.0',
-						  'future==0.18.2',
-						  'helium==3.0.5',
-						  'lxml==4.6.2',
-						  'numpy==1.20.1',
-						  'pandas==1.2.3',
-						  'pyparsing==2.4.7',
-						  'python-dateutil==2.8.1',
-						  'pytz==2021.1',
-						  'selenium==3.141.0',
-						  'six==1.15.0',
-						  'Unidecode==1.2.0',
-						  'urllib3==1.26.3',
-        				 ]
+        install_requires=[	beautifulsoup4==4.9.3,
+				bibtexparser==1.2.0,
+				bs4==0.0.1,
+				et-xmlfile==1.1.0,
+				future==0.18.2,
+				fuzzywuzzy==0.18.0,
+				helium==3.0.5,
+				lxml==4.6.2,
+				numpy==1.20.1,
+				openpyxl==3.0.7,
+				pandas==1.2.3,
+				pyparsing==2.4.7,
+				python-dateutil==2.8.1,
+				python-Levenshtein==0.12.2,
+				pytz==2021.1,
+				selenium==3.141.0,
+				six==1.15.0,
+				soupsieve==2.2.1,
+				Unidecode==1.2.0,
+				urllib3==1.26.3
+
+        				]
     )
 
 
