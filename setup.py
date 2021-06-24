@@ -107,7 +107,7 @@ def main():
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
-        'Topic :: Scientific communication :: Visibility',
+        'Topic :: Software Development :: Build Tools',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
