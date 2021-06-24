@@ -77,7 +77,7 @@ def main():
         long_description_content_type="text/markdown",
 
         # Dependent packages (distributions)
-        install_requires=[beautifulsoup4==4.9.3,
+        install_requires=['beautifulsoup4==4.9.3',
               'bibtexparser==1.2.0',
               'bs4==0.0.1',
               'et-xmlfile==1.1.0',
