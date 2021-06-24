@@ -15,8 +15,11 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 
 import unittest
+
 import GoogleScholarReport
 from GoogleScholarReport import main
+
+here = os.path.abspath(os.path.dirname('__file__'))
 
 class GsFacProfileTestCase(unittest.TestCase):
     def setUp(self):
@@ -30,7 +33,7 @@ class GsFacProfileTestCase(unittest.TestCase):
                                 'title': 'Effect of potential screening on the H 2 autoionizing states', 
                                 'ENTRYTYPE': 'article', 'ID': 'ordonez2017effect'}]
                 
-        self.dft = pd.read_csv('./data/dft.csv')
+        self.dft = pd.read_csv(here+'/test/data/dft.csv')
         
     def text_extract_title(self):
 
@@ -50,13 +53,17 @@ class GsFacProfileTestCase(unittest.TestCase):
                                                
     def test_read_bibtex(self):
                 
-        with open('./data/readbib.bib') as bibfile:
+        with open(here+'/test/data/readbib.bib') as bibfile:
             
             bib_str=bibfile.read()
                 
             bibreaded=main.read_bibtex(bib_str)
 
-            self.assertEqual(bibreaded.get_entry_list,self.bibtex)
+            print(bibreaded.entries)
+
+            print(self.bibtex)
+
+            self.assertEqual(bibreaded.entries,self.bibtex)
 
     def test_merge(self):
         pass
