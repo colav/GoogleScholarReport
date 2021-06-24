@@ -375,7 +375,7 @@ def gsr(url, email = '', password = '',output='', admin = False):
 
             dfs.to_excel('google_scholar_report_user.xlsx',index=False)
 
-            print('generic report stored with %s records in format xlsx' % gsr.shape[0])
+            print('generic report stored with %s records in format xlsx' % dfs.shape[0])
         
 
 if __name__ == "__main__":
