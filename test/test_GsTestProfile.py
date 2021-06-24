@@ -18,10 +18,9 @@ import unittest
 from GsFacProfile import main
 
 class GsFacProfileTestCase(unittest.TestCase):
-
-	def setUp(self):
-                self.bibtex = [{'publisher': 'APS', 
-                                'year': '2017', 
+    def setUp(self):
+        self.bibtex = [{'publisher': 'APS',
+                'year': '2017', 
                                 'pages': '052503', 
                                 'number': '5', 
                                 'volume': '96', 
@@ -61,4 +60,4 @@ class GsFacProfileTestCase(unittest.TestCase):
                 pass
 
 if __name__=='__main__':
-	unittest.main()
+    unittest.main()
