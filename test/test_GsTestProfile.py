@@ -29,35 +29,36 @@ class GsFacProfileTestCase(unittest.TestCase):
                                 'title': 'Effect of potential screening on the H 2 autoionizing states', 
                                 'ENTRYTYPE': 'article', 'ID': 'ordonez2017effect'}]
                 
-                self.dft = pd.read_csv('./data/dft.csv')
+        self.dft = pd.read_csv('./data/dft.csv')
         
-        def text_extract_title(self):
+    def text_extract_title(self):
 
-                self.dft['titleU']=self.dft['title'].apply(lambda s: unidecode.unidecode(s))
+        self.dft['titleU']=self.dft['title'].apply(lambda s: unidecode.unidecode(s))
 
-                self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[2] ==
-                                'Revista Actualidades Biologicas: 100 editions of scientific communication')
+        self.assertEqual(self.dft['titleU'].apply(main.extract_title).loc[2] ==
+                            'Revista Actualidades Biologicas: 100 editions of scientific communication')
 
-                self.assertEqual(dft['titleU'].apply(main.extract_title).loc[0]==
-                                'Riqueza, endemismo y conservacion de los mamiferos de Colombia')
+        self.assertEqual(dft['titleU'].apply(main.extract_title).loc[0]==
+                            'Riqueza, endemismo y conservacion de los mamiferos de Colombia')
 
-                self.assertEqual(dft['titleU']. apply(main.extract_title).loc[3]==
-                                'BEHAVIOUR OF HIGH TEMPERATURA PHASES OF THE POLYMERIC SYSTEM PVOH+ NAH 2 PO 4+ H 2')
+        self.assertEqual(dft['titleU']. apply(main.extract_title).loc[3]==
+                            'BEHAVIOUR OF HIGH TEMPERATURA PHASES OF THE POLYMERIC SYSTEM PVOH+ NAH 2 PO 4+ H 2')
 
-                self.assertEqual(dft['titleU'].apply(main.extract_title).loc[1]==
-                                'Brans-Dicke Theory with : Black Holes and Large Scale Structures')
+        self.assertEqual(dft['titleU'].apply(main.extract_title).loc[1]==
+                            'Brans-Dicke Theory with : Black Holes and Large Scale Structures')
                                                
-        def test_read_bibtex(self):
+    def test_read_bibtex(self):
                 
-                with open('./data/readbib.bib') as bibfile:
-                        bib_str=bibfile.read()
+        with open('./data/readbib.bib') as bibfile:
+            
+            bib_str=bibfile.read()
                 
-                bibreaded=main.read_bibtex(bib_str)
+            bibreaded=main.read_bibtex(bib_str)
 
-                self.assertEqual(bibreaded.get_entry_list,self.bibtex)
+            self.assertEqual(bibreaded.get_entry_list,self.bibtex)
 
-        def test_merge(self):
-                pass
+    def test_merge(self):
+        pass
 
 if __name__=='__main__':
     unittest.main()
