@@ -96,8 +96,7 @@ def main():
 			  six==1.15.0,
 			  soupsieve==2.2.1,
 			  Unidecode==1.2.0,
-			  urllib3==1.26.3
-        		],
+			  urllib3==1.26.3],
 	classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha
