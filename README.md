@@ -36,7 +36,7 @@ From comman line, this tool have three main forms of use: generic, authenticated
 For the firts option of use (generic), issue: 
 
 ```bash
-python3 collector.py "url_for_the_google_scholar_profile"
+collector "url_for_the_google_scholar_profile"
 ```
 The above option return one xlsx file report in the current working directory with the following metadata:
 
@@ -45,13 +45,13 @@ The above option return one xlsx file report in the current working directory wi
 If you want the output in csv or json format agregate the bellow flag and the desire ouput format, for instance:
 
 ```bash
-python3 collector.py "url_for_the_google_scholar_profile" --output csv
+collector "url_for_the_google_scholar_profile" --output csv
 ```
 
 For the second option of use (user authenticate):
 
 ```bash
-python3 collector.py "url_for_the_google_scholar_profile" --email <email> --password <password>
+collector "url_for_the_google_scholar_profile" --email <email> --password <password>
 ```
 
 This return one xlsx file report in the current working directory with the following metadata:
@@ -61,7 +61,7 @@ This return one xlsx file report in the current working directory with the follo
  Finally, for admin mode, issue: 
  
  ```bash
-python3 collector.py "url_for_the_google_scholar_profile" --email <email> --password <password> --admin
+collector "url_for_the_google_scholar_profile" --email <email> --password <password> --admin
 ```
 
 This return by default an xlsx file with the same metadata that option two plus one fiedl 'bibtex'.
@@ -69,5 +69,5 @@ This return by default an xlsx file with the same metadata that option two plus 
 In general this commanline tool have the following form:
 
 ```bash
-python3 collector.py "url_for_the_google_scholar_profile" --email <user_email> --password <password> --output <format> --admin
+collector "url_for_the_google_scholar_profile" --email <user_email> --password <password> --output <format> --admin
 ```
