@@ -14,8 +14,9 @@ For the firts option of use (generic), issue:
 ```python
 >>> from GoogleScholarReport import collector
 >>> collector.gsr('url_to_google_scholar_profile', ouput='json')
-
 ```
+Example
+
 For the second option of use (user authenticate):
 ```python
 >>> from GoogleScholarReport import collector
@@ -30,14 +31,19 @@ Finally, for admin mode, issue:
 
 ```
 
-# Usage from comman-line 
-From comman line, this tool have three main forms of use: generic, authenticated and admin; which difer in amount and cuality of metadata results.
+# Usage from command-line 
+From command line, this tool has three main forms of use: generic, authenticated and admin; which difer in amount and quality of the metadata results.
 
-For the firts option of use (generic), issue: 
+For the first option of use (generic), use: 
 
 ```bash
 collector "url_for_the_google_scholar_profile"
 ```
+Example:
+```bash
+collector "https://scholar.google.com/citations?user=1sKULCoAAAAJ&hl=en"
+```
+
 The above option return one xlsx file report in the current working directory with the following metadata:
 
 'title', 'author', 'journal', 'volume', 'number','pages', 'year', 'cite_id', 'cites', 'TitleU'.
