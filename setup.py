@@ -68,6 +68,7 @@ def main():
 
         # Details
         url="https://github.com/readingwritingcode/google-scholar-report",
+        scripts=['bin/collector'],
 
         #
         license="BSD",
