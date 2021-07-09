@@ -94,7 +94,7 @@ def main():
               'python-Levenshtein',
               'pytz',
               'selenium',
-              'six,
+              'six',
               'soupsieve',
               'Unidecode',
               'urllib3'],
