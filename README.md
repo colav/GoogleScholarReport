@@ -25,14 +25,12 @@ For the second option of use (user authenticate):
 ```python
 >>> from GoogleScholarReport import collector
 >>> collector.gsr('url_to_google_scholar_profile',email='user_email_google_scholar',password='pass_user_gs',' ouput='json')
-
 ```
 
 Finally, for admin mode, use: 
 ```python
 >>> from GoogleScholarReport import collector
 >>> collector.gsr('url_to_google_scholar_profile',email='user_email_google_scholar',password='pass_user_gs', ouput='some_ouput(csv,json)',admin=True)
-
 ```
 
 # Usage from command-line 
@@ -70,7 +68,7 @@ This return one xlsx file report in the current working directory with the follo
  
  Finally, for admin mode, issue: 
  
- ```bash
+```bash
 collector "url_for_the_google_scholar_profile" --email <email> --password <password> --admin
 ```
 
