@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import argparse
 from GoogleScholarReport.collector import command_line_parser, gsr
 
 if __name__ == "__main__":
