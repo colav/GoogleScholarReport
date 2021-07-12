@@ -182,9 +182,10 @@ def scraping_gs(url):
     clicks=0
 
         # Scroll to end
+    #print(helium.Button.is_enabled(helium.Button('SHOW MORE')))
     while helium.Button.is_enabled(helium.Button('SHOW MORE')):
 
-        helium.scroll_down(200000)
+        helium.scroll_down(2000000)
         print('reading page:',clicks, 'of Gs profile')
         helium.click(helium.Button('SHOW MORE'))
         helium.scroll_down(100000)
@@ -211,12 +212,12 @@ def export_gs(email,password):
     sleep = 1.5
     url_to_gs='https://scholar.google.com/citations?hl=es&login' 
 
-    browser=helium.start_firefox(url_to_gs,headless=True)
+    browser=helium.start_firefox(url_to_gs,headless=False)
     print('Authenticating in google scholar profile...')
-    print('\n')
 
     # Login
     helium.write(email,into='Correo electrónico o teléfono')
+    print("correOK")
 
     time.sleep(sleep)
     helium.click(helium.Button('Siguiente'))
@@ -226,16 +227,14 @@ def export_gs(email,password):
 
     time.sleep(sleep)
     helium.click(helium.Button('Siguiente'))
-
     print('Auth google scholar ok')
-    print('\n')
 
     # Wait until load page
     helium.wait_until(helium.Text('TÍTULO').exists)
 
     # Select articles
     print('collecting google scholar records...')
-    print('\n')
+  
     
     time.sleep(3)
     browser.find_element_by_id('gsc_x_all').click()
@@ -318,7 +317,6 @@ def merge(dfs,dfe):
     gs=gs.reset_index(drop=True) # ouput if all its good
 
     print('Exporting google scholar records with all metadata...')
-    print('\n')
     
     # fix empty results right side
     gsn = gs[~gs['title'].isna()].reset_index(drop=True) # not empty
@@ -392,7 +390,7 @@ def merge(dfs,dfe):
 
 def gsr(url, email = '', password = '',output='', admin = False):
     
-    if email != '' and password !='':
+    if email != '' and password !='' and 'gmail' not in email:
         
         dfs = scraping_gs(url)
 
@@ -473,17 +471,17 @@ if __name__ == "__main__":
 
     args = command_line_parser()
     
-    print(args.admin)
-
-    print(args.output)
-    
-    # sys.exit('check')
+    print('Conecting With Google Scholar Profile...')
 
     url = str(args.url)
 
     if args.email and args.password:
 
         email = args.email
+
+        if "gmail" in email:
+
+            print("Warning!:loggin by gmail account does not work... a generic report will be generated ")
 
         password = args.password
 
