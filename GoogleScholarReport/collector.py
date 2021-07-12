@@ -212,7 +212,7 @@ def export_gs(email,password):
     sleep = 1.5
     url_to_gs='https://scholar.google.com/citations?hl=es&login' 
 
-    browser=helium.start_firefox(url_to_gs,headless=False)
+    browser=helium.start_firefox(url_to_gs,headless=True)
     print('Authenticating in google scholar profile...')
 
     # Login
