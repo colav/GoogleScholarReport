@@ -54,7 +54,7 @@ def main():
         name="GoogleScholarReport",
 
         # Version number (initial):
-        version="0.1.4",
+        version="0.1.5",
 
         # Application author details:
         author="Colav",
