@@ -213,11 +213,11 @@ def export_gs(email,password):
     url_to_gs='https://scholar.google.com/citations?hl=es&login' 
 
     browser=helium.start_firefox(url_to_gs,headless=True)
-    print('Authenticating in google scholar profile...')
+    print('Authenticating in Google Scholar Profile...')
 
     # Login
     helium.write(email,into='Correo electrónico o teléfono')
-    print("correOK")
+    print("Auth OK")
 
     time.sleep(sleep)
     helium.click(helium.Button('Siguiente'))
@@ -233,7 +233,7 @@ def export_gs(email,password):
     helium.wait_until(helium.Text('TÍTULO').exists)
 
     # Select articles
-    print('collecting google scholar records...')
+    print('Collecting google scholar records...')
   
     
     time.sleep(3)
@@ -368,7 +368,7 @@ def merge(dfs,dfe):
                         g = g.append(d,ignore_index=True)
 
                     else:
-                        print('problem with record:')
+                        print('Problem with record:')
                         print(gsy.loc[i])
 
                 else:
