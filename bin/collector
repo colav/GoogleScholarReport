@@ -6,11 +6,7 @@ if __name__ == "__main__":
 
     args = command_line_parser()
     
-    print(args.admin)
-
-    print(args.output)
-    
-    # sys.exit('check')
+    print('Conecting With Google Scholar Profile...')
 
     url = str(args.url)
 
