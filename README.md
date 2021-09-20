@@ -46,9 +46,9 @@ Example:
 collector "https://scholar.google.com/citations?user=1sKULCoAAAAJ&hl=en"
 ```
 
-The above option return one xlsx file report in the current working directory with the following metadata:
+The above option return one Excel file, `google_scholar_report_user.xlsx`, in the current working directory with the following metadata:
 
-'title', 'author', 'journal', 'volume', 'number','pages', 'year', 'cite_id', 'cites', 'TitleU'.
+    'title', 'author', 'journal', 'volume', 'number','pages', 'year', 'cite_id', 'cites', 'TitleU'.
 
 If you want the output in csv or json format aggregate the bellow flag and the desire output format, for instance:
 
@@ -56,23 +56,23 @@ If you want the output in csv or json format aggregate the bellow flag and the d
 collector "url_for_the_google_scholar_profile" --output csv
 ```
 
-For the second option of use (user authenticate):
+For the second option of use (authenticated user):
 
 ```bash
 collector "url_for_the_google_scholar_profile" --email <email> --password <password>
 ```
 
-This return one xlsx file report in the current working directory with the following metadata:
+This return one Exce file, `google_scholar_report_user.xlsx`, in the current working directory with the following metadata:
 
-'cite_id', 'cites', 'publisher', 'year', 'pages', 'number', 'volume', 'journal', 'author', 'title','ENTRYTYPE', 'ID', 'school', 'booktitle', 'organization', 'note','month', 'institution'
+    'cite_id', 'cites', 'publisher', 'year', 'pages', 'number', 'volume', 'journal', 'author', 'title','ENTRYTYPE', 'ID', 'school', 'booktitle', 'organization', 'note','month', 'institution'
  
- Finally, for admin mode, issue: 
+ Finally, for admin mode, use: 
  
 ```bash
 collector "url_for_the_google_scholar_profile" --email <email> --password <password> --admin
 ```
 
-This returns by default an xlsx file with the same metadata that option two plus one fiedl 'bibtex'.
+This returns by default an xlsx file, `google_scholar_report_user.xlsx`, with the same metadata that option two, plus the field `'bibtex'`.
 
 In general this command line tool have the following form:
 
